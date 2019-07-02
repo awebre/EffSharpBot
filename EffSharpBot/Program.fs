@@ -1,7 +1,6 @@
-﻿open Discord
+﻿// Learn more about F# at http://fsharp.org
 
-// Learn more about F# at http://fsharp.org
-
+open Discord
 open Discord.WebSocket
 open System
 open System.Threading.Tasks
@@ -26,12 +25,12 @@ let main argv =
         let client = new DiscordSocketClient()
         client.add_Log(log)
         
-        do! client.LoginAsync(TokenType.Bot, settings.DiscordToken) |> Async.AwaitTask
-        do! client.StartAsync() |> Async.AwaitTask
+        client.LoginAsync(TokenType.Bot, settings.DiscordToken).Wait()
+        client.StartAsync().Wait()
         
         client.add_MessageReceived(messageRecieved)
         
-        do! Task.Delay(-1) |> Async.AwaitTask
+        Task.Delay(-1).Wait()
     } |> Async.RunSynchronously
     0
     
